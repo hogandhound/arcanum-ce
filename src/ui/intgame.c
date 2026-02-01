@@ -7564,7 +7564,7 @@ void intgame_message_window_display_attack(int64_t obj)
     mes_file_entry.num = 59; // "Fatigue"
     mes_get_msg(intgame_mes_file, &mes_file_entry);
 
-    item_weapon_damage(weapon_obj, obj, DAMAGE_TYPE_FATIGUE, skill, 0, &min_dam, &max_dam);
+    item_weapon_damage(weapon_obj, obj, DAMAGE_TYPE_FATIGUE, skill, 0, 0, &min_dam, &max_dam);
     if (max_dam != 0) {
         sprintf(str, "%s: %d-%d", mes_file_entry.str, min_dam, max_dam);
     } else {
@@ -7579,7 +7579,7 @@ void intgame_message_window_display_attack(int64_t obj)
     mes_file_entry.num = 61; // "Fire Damage"
     mes_get_msg(intgame_mes_file, &mes_file_entry);
 
-    item_weapon_damage(weapon_obj, obj, DAMAGE_TYPE_FIRE, skill, 0, &min_dam, &max_dam);
+    item_weapon_damage(weapon_obj, obj, DAMAGE_TYPE_FIRE, skill, 0, 0, &min_dam, &max_dam);
     if (max_dam != 0) {
         sprintf(str, "%s: %d-%d", mes_file_entry.str, min_dam, max_dam);
     } else {
@@ -7594,7 +7594,7 @@ void intgame_message_window_display_attack(int64_t obj)
     mes_file_entry.num = 58; // "Damage"
     mes_get_msg(intgame_mes_file, &mes_file_entry);
 
-    item_weapon_damage(weapon_obj, obj, DAMAGE_TYPE_NORMAL, skill, 0, &min_dam, &max_dam);
+    item_weapon_damage(weapon_obj, obj, DAMAGE_TYPE_NORMAL, skill, 0, 0, &min_dam, &max_dam);
     if (max_dam != 0) {
         sprintf(str, "%s: %d-%d", mes_file_entry.str, min_dam, max_dam);
     } else {
@@ -7609,7 +7609,7 @@ void intgame_message_window_display_attack(int64_t obj)
     mes_file_entry.num = 60; // "Electrical Damage"
     mes_get_msg(intgame_mes_file, &mes_file_entry);
 
-    item_weapon_damage(weapon_obj, obj, DAMAGE_TYPE_ELECTRICAL, skill, 0, &min_dam, &max_dam);
+    item_weapon_damage(weapon_obj, obj, DAMAGE_TYPE_ELECTRICAL, skill, 0, 0, &min_dam, &max_dam);
     if (max_dam != 0) {
         sprintf(str, "%s: %d-%d", mes_file_entry.str, min_dam, max_dam);
     } else {
@@ -7624,7 +7624,7 @@ void intgame_message_window_display_attack(int64_t obj)
     mes_file_entry.num = 62; // "Poison"
     mes_get_msg(intgame_mes_file, &mes_file_entry);
 
-    item_weapon_damage(weapon_obj, obj, DAMAGE_TYPE_POISON, skill, 0, &min_dam, &max_dam);
+    item_weapon_damage(weapon_obj, obj, DAMAGE_TYPE_POISON, skill, 0, 0, &min_dam, &max_dam);
     if (max_dam != 0) {
         sprintf(str, "%s: %d-%d", mes_file_entry.str, min_dam, max_dam);
     } else {

@@ -77,7 +77,7 @@ typedef struct CombatContext {
     /* 0008 */ int64_t attacker_obj;
     /* 0010 */ int64_t weapon_obj;
     /* 0018 */ int skill;
-    /* 001C */ int padding_1C;
+    /* 001C */ int successes;
     /* 0020 */ int64_t target_obj;
     /* 0028 */ int64_t field_28;
     /* 0030 */ int64_t field_30;
@@ -88,6 +88,7 @@ typedef struct CombatContext {
     /* 005C */ int total_dam;
     /* 0060 */ int game_difficulty;
     /* 0064 */ int field_64;
+    
 } CombatContext;
 
 // Serializeable.
@@ -98,12 +99,12 @@ void combat_exit();
 void combat_reset();
 bool combat_save(TigFile* stream);
 bool combat_load(GameLoadInfo* load_info);
-void sub_4B2210(int64_t attacker_obj, int64_t target_obj, CombatContext* combat);
+void combat_context_setup(int64_t attacker_obj, int64_t target_obj, CombatContext* combat);
 int64_t combat_critter_weapon(int64_t critter_obj);
 void sub_4B2650(int64_t a1, int64_t a2, CombatContext* combat);
 bool sub_4B2870(int64_t attacker_obj, int64_t target_obj, int64_t target_loc, int64_t projectile_obj, int range, int64_t cur_loc, int64_t a7);
-int sub_4B3170(CombatContext* combat);
-void sub_4B3BB0(int64_t attacker_obj, int64_t target_obj, int hit_loc);
+int combat_weapon_handle(CombatContext* combat);
+void combat_weapon_calculate(int64_t attacker_obj, int64_t target_obj, int hit_loc);
 void combat_throw(int64_t attacker_obj, int64_t weapon_obj, int64_t target_obj, int64_t target_loc, int hit_loc);
 bool combat_critter_is_combat_mode_active(int64_t obj);
 bool combat_can_exit_combat_mode(int64_t obj);
