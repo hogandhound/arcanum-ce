@@ -784,7 +784,7 @@ void sub_4B2F60(CombatContext* combat)
 }
 
 // 0x4B3170
-int sub_4B3170(CombatContext* combat)
+int combat_weapon_handle(CombatContext* combat)
 {
     bool was_in_bed = false;
     int sound_id;
@@ -957,6 +957,11 @@ int sub_4B3170(CombatContext* combat)
                         }
                     }
                 }
+
+                if ((combat->flags & CF_HIT))
+                {
+                    combat->successes = skill_invocation.successes;
+                }
             }
         }
     }
@@ -1116,7 +1121,7 @@ void combat_process_ranged_attack(CombatContext* combat)
 }
 
 // 0x4B3BB0
-void sub_4B3BB0(int64_t attacker_obj, int64_t target_obj, int hit_loc)
+void combat_weapon_calculate(int64_t attacker_obj, int64_t target_obj, int hit_loc)
 {
     CombatContext combat;
 
@@ -1124,7 +1129,7 @@ void sub_4B3BB0(int64_t attacker_obj, int64_t target_obj, int hit_loc)
     combat.hit_loc = hit_loc;
     combat.flags |= CF_WEAPON_WEAR;
     combat.flags |= 0x40000;
-    sub_4B3170(&combat);
+    combat_weapon_handle(&combat);
 }
 
 // 0x4B3C00
@@ -1152,7 +1157,7 @@ void combat_throw(int64_t attacker_obj, int64_t weapon_obj, int64_t target_obj, 
         combat.flags |= 0x40;
         object_flags_set(weapon_obj, OF_OFF);
         object_drop(weapon_obj, attacker_loc);
-        sub_4B3170(&combat);
+        combat_weapon_handle(&combat);
     } else {
         object_drop(weapon_obj, attacker_loc);
         item_transfer(weapon_obj, attacker_obj);
@@ -2626,6 +2631,7 @@ void combat_calc_dmg(CombatContext* combat)
             combat->attacker_obj,
             damage_type,
             combat->skill,
+            combat->successes,
             (combat->flags & 0x20000) != 0,
             &min_damage,
             &max_damage);
