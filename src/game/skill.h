@@ -128,6 +128,7 @@ typedef struct SkillInvocation {
     /* 009C */ int skill;
     /* 00A0 */ int modifier;
     /* 00A4 */ int hit_loc;
+    int successes;
 } SkillInvocation;
 
 extern const char* basic_skill_lookup_keys_tbl[BASIC_SKILL_COUNT];

@@ -657,7 +657,7 @@ void critter_kill(int64_t obj)
 
     multiplayer_lock();
 
-    sub_4B2210(OBJ_HANDLE_NULL, obj, &combat);
+    combat_context_setup(OBJ_HANDLE_NULL, obj, &combat);
     combat.dam_flags |= CDF_DEATH;
     combat_dmg(&combat);
 
