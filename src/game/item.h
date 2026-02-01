@@ -130,7 +130,7 @@ int item_weapon_magic_speed(int64_t item_obj, int64_t owner_obj);
 int item_weapon_skill(int64_t obj);
 int item_weapon_range(int64_t item_id, int64_t critter_id);
 int item_weapon_min_strength(int64_t item_obj, int64_t critter_obj);
-void item_weapon_damage(int64_t weapon_obj, int64_t critter_obj, int damage_type, int skill, bool a5, int* min_dam_ptr, int* max_dam_ptr);
+void item_weapon_damage(int64_t weapon_obj, int64_t critter_obj, int damage_type, int skill, int successes, bool a5, int* min_dam_ptr, int* max_dam_ptr);
 int item_weapon_aoe_radius(int64_t obj);
 void item_inventory_slots_get(int64_t obj, int* slots);
 void item_inventory_slots_set(int64_t item_obj, int inventory_location, int* slots, int value);

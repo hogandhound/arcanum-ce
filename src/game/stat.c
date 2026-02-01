@@ -363,15 +363,15 @@ int stat_level_get(int64_t obj, int stat)
             // Critters affected by Tempus Fugit (usually party members) gets
             // +10 speed, while everyone else gets -10.
             if ((obj_field_int32_get(obj, OBJ_F_SPELL_FLAGS) & OSF_TEMPUS_FUGIT) != 0) {
-                value += 10;
+                value += 5;
             } else {
-                value -= 10;
+                value -= 5;
             }
         }
 
         // Penalty for crippled legs.
         if ((obj_field_int32_get(obj, OBJ_F_CRITTER_FLAGS) & OCF_CRIPPLED_LEGS_BOTH) != 0) {
-            value -= 5;
+            value -= 3;
         }
 
         break;
@@ -575,12 +575,16 @@ int stat_base_get(int64_t obj, int stat)
             value = stat_level_get(obj, STAT_DEXTERITY) - 10;
             break;
         case STAT_SPEED:
-            value = stat_level_get(obj, STAT_DEXTERITY);
+            value = (stat_level_get(obj, STAT_DEXTERITY) * 2 + 
+                stat_level_get(obj, STAT_CONSTITUTION) + stat_level_get(obj, STAT_INTELLIGENCE) + stat_level_get(obj, STAT_PERCEPTION)
+                ) / 6;
 
             // Extraordinary dexterity grants +5 speed.
             if (stat_is_extraordinary(obj, STAT_DEXTERITY)) {
-                value += 5;
+                value += 2;
             }
+            //This should give a character who is average across the board 6 AP (16 + 8 + 8 + 8) / 6 = 6.666
+            //Maxing out Dex and leaving the other stats at 12 AP. A theoretical max of 16.
 
             break;
         case STAT_HEAL_RATE:
@@ -1046,7 +1050,7 @@ bool stat_poison_timeevent_process(TimeEvent* timeevent)
         if (poison > 0) {
             if (!tig_net_is_active()
                 || (obj_field_int32_get(obj, OBJ_F_FLAGS) & OF_OFF) == 0) {
-                sub_4B2210(OBJ_HANDLE_NULL, obj, &combat);
+                combat_context_setup(OBJ_HANDLE_NULL, obj, &combat);
 
                 // Determine damage based on poison severity.
                 if (poison >= 550) {

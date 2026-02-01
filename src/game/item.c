@@ -2422,6 +2422,7 @@ int item_total_attack(int64_t critter_obj)
             critter_obj,
             damage_type,
             skill,
+            0,
             false,
             &min_dam,
             &max_dam);
@@ -2916,7 +2917,7 @@ void item_wield_best(int64_t critter_obj, int inventory_location, int64_t target
                         int min_dam;
                         int max_dam;
 
-                        item_weapon_damage(item_obj, critter_obj, damage_type, skill, false, &min_dam, &max_dam);
+                        item_weapon_damage(item_obj, critter_obj, damage_type, skill, 0, false, &min_dam, &max_dam);
                         total_dam = (min_dam + max_dam) / 2;
                     }
 
@@ -3418,7 +3419,7 @@ int item_weapon_min_strength(int64_t item_obj, int64_t critter_obj)
 // TODO: Lots of jumps, check.
 //
 // 0x465F70
-void item_weapon_damage(int64_t weapon_obj, int64_t critter_obj, int damage_type, int skill, bool a5, int* min_dam_ptr, int* max_dam_ptr)
+void item_weapon_damage(int64_t weapon_obj, int64_t critter_obj, int damage_type, int skill, int successes, bool a5, int* min_dam_ptr, int* max_dam_ptr)
 {
     int min_dam;
     int max_dam;
@@ -3430,7 +3431,7 @@ void item_weapon_damage(int64_t weapon_obj, int64_t critter_obj, int damage_type
 
     if (skill == SKILL_MELEE) {
         bonus_dam = stat_level_get(critter_obj, STAT_DAMAGE_BONUS);
-        v1 = sub_4C6510(critter_obj);
+        v1 = 100;
     }
 
     if (weapon_obj != OBJ_HANDLE_NULL) {
@@ -3519,6 +3520,19 @@ void item_weapon_damage(int64_t weapon_obj, int64_t critter_obj, int damage_type
 
     if (max_dam > massive_dam) {
         max_dam = massive_dam;
+    }
+
+    if (successes > 0) {
+        switch (successes) {
+        case 1:
+        case 2:
+        case 3:
+            min_dam = min_dam + (max_dam - min_dam) * successes / 4;
+            break;
+        default:
+            min_dam = max_dam;
+            break;
+        }
     }
 
     *min_dam_ptr = min_dam;

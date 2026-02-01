@@ -356,7 +356,7 @@ bool combat_load(GameLoadInfo* load_info)
 }
 
 // 0x4B2210
-void sub_4B2210(int64_t attacker_obj, int64_t target_obj, CombatContext* combat)
+void combat_context_setup(int64_t attacker_obj, int64_t target_obj, CombatContext* combat)
 {
     int type;
 
@@ -694,7 +694,7 @@ bool sub_4B2870(int64_t attacker_obj, int64_t target_obj, int64_t target_loc, in
     if (block_obj != OBJ_HANDLE_NULL) {
         CombatContext combat;
 
-        sub_4B2210(attacker_obj, block_obj, &combat);
+        combat_context_setup(attacker_obj, block_obj, &combat);
 
         if (target_obj != OBJ_HANDLE_NULL) {
             combat.field_28 = target_obj;
@@ -801,7 +801,7 @@ void sub_4B2F60(CombatContext* combat)
 }
 
 // 0x4B3170
-int sub_4B3170(CombatContext* combat)
+int combat_weapon_handle(CombatContext* combat)
 {
     bool was_in_bed = false;
     int sound_id;
@@ -974,6 +974,11 @@ int sub_4B3170(CombatContext* combat)
                         }
                     }
                 }
+
+                if ((combat->flags & CF_HIT))
+                {
+                    combat->successes = skill_invocation.successes;
+                }
             }
         }
     }
@@ -1048,7 +1053,7 @@ void combat_process_melee_attack(CombatContext* combat)
 
         if ((obj_field_int32_get(combat->attacker_obj, OBJ_F_SPELL_FLAGS) & OSF_BODY_OF_FIRE) == 0
             && (obj_field_int32_get(combat->target_obj, OBJ_F_SPELL_FLAGS) & OSF_BODY_OF_FIRE) != 0) {
-            sub_4B2210(combat->target_obj, combat->attacker_obj, &body_of_fire);
+            combat_context_setup(combat->target_obj, combat->attacker_obj, &body_of_fire);
             body_of_fire.dam[DAMAGE_TYPE_FIRE] = 5;
             combat_dmg(&body_of_fire);
         }
@@ -1135,15 +1140,15 @@ void combat_process_ranged_attack(CombatContext* combat)
 }
 
 // 0x4B3BB0
-void sub_4B3BB0(int64_t attacker_obj, int64_t target_obj, int hit_loc)
+void combat_weapon_calculate(int64_t attacker_obj, int64_t target_obj, int hit_loc)
 {
     CombatContext combat;
 
-    sub_4B2210(attacker_obj, target_obj, &combat);
+    combat_context_setup(attacker_obj, target_obj, &combat);
     combat.hit_loc = hit_loc;
     combat.flags |= CF_WEAPON_WEAR;
     combat.flags |= 0x40000;
-    sub_4B3170(&combat);
+    combat_weapon_handle(&combat);
 }
 
 // 0x4B3C00
@@ -1158,7 +1163,7 @@ void combat_throw(int64_t attacker_obj, int64_t weapon_obj, int64_t target_obj, 
     }
 
     if (object_script_execute(attacker_obj, weapon_obj, target_obj, SAP_THROW, 0)) {
-        sub_4B2210(attacker_obj, target_obj, &combat);
+        combat_context_setup(attacker_obj, target_obj, &combat);
         combat.hit_loc = hit_loc;
         combat.weapon_obj = weapon_obj;
         if (target_obj == OBJ_HANDLE_NULL) {
@@ -1170,7 +1175,7 @@ void combat_throw(int64_t attacker_obj, int64_t weapon_obj, int64_t target_obj, 
         combat.flags |= 0x40;
         mp_object_flags_set(weapon_obj, OF_OFF);
         object_drop(weapon_obj, attacker_loc);
-        sub_4B3170(&combat);
+        combat_weapon_handle(&combat);
     } else {
         object_drop(weapon_obj, attacker_loc);
         item_transfer(weapon_obj, attacker_obj);
@@ -2732,6 +2737,7 @@ void combat_calc_dmg(CombatContext* combat)
             combat->attacker_obj,
             damage_type,
             combat->skill,
+            combat->successes,
             (combat->flags & 0x20000) != 0,
             &min_damage,
             &max_damage);
@@ -3673,7 +3679,7 @@ bool combat_consume_action_points(int64_t obj, int action_points)
     if (combat_action_points > 0
         && is_pc
         && critter_fatigue_current(obj) > 1) {
-        sub_4B2210(OBJ_HANDLE_NULL, obj, &combat);
+        combat_context_setup(OBJ_HANDLE_NULL, obj, &combat);
         combat.flags |= 0x80;
         combat.dam[DAMAGE_TYPE_FATIGUE] = 2;
         combat_dmg(&combat);

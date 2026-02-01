@@ -799,16 +799,16 @@ int basic_skill_effectiveness(int64_t obj, int bs, int64_t target_obj)
         level = basic_skill_level(obj, bs);
         switch (bs) {
         case BASIC_SKILL_BOW:
-            value = 5 * level + 25;
+            value = 5 * level + 20 + 2*(stat_base_get(obj, STAT_DEXTERITY) + stat_base_get(obj, STAT_PERCEPTION));
             break;
         case BASIC_SKILL_DODGE:
             value = 5 * level;
             break;
         case BASIC_SKILL_MELEE:
-            value = 5 * level + 25;
+            value = 5 * level + 20 + 2 * (stat_base_get(obj, STAT_DEXTERITY) + stat_base_get(obj, STAT_STRENGTH));
             break;
         case BASIC_SKILL_THROWING:
-            value = 7 * level + 25;
+            value = 7 * level + 20 + 2 * (stat_base_get(obj, STAT_DEXTERITY) + stat_base_get(obj, STAT_STRENGTH));
             break;
         case BASIC_SKILL_PROWLING:
             if (level != 0) {
@@ -1324,7 +1324,7 @@ int tech_skill_effectiveness(int64_t obj, int ts, int64_t target_obj)
         value = 4 * level;
         break;
     case TECH_SKILL_FIREARMS:
-        value = 5 * level + 25;
+        value = 5 * level + 20 + 2 * (stat_base_get(obj, STAT_DEXTERITY) + stat_base_get(obj, STAT_PERCEPTION));
         if (target_obj != OBJ_HANDLE_NULL
             && (obj_field_int32_get(target_obj, OBJ_F_SPELL_FLAGS) & OSF_MAGNETIC_INVERSION) != 0) {
             value -= 20;
@@ -1527,6 +1527,7 @@ void skill_invocation_init(SkillInvocation* skill_invocation)
     skill_invocation->target_loc = 0;
     skill_invocation->modifier = 0;
     skill_invocation->skill = -1;
+    skill_invocation->successes = 0;
 }
 
 /**
@@ -1611,6 +1612,10 @@ bool skill_invocation_run(SkillInvocation* skill_invocation)
     // forced success.
     is_success = difficulty + rnd_difficulty_roll <= effectiveness
         || (skill_invocation->flags & SKILL_INVOCATION_FORCED) != 0;
+    if (is_success)
+    {
+        skill_invocation->successes = (effectiveness - (difficulty + rnd_difficulty_roll)) / 10;
+    }
 
     // Roll for critical hit/critical miss.
     crit_roll = random_between(1, 100);
@@ -1858,7 +1863,7 @@ bool skill_invocation_run(SkillInvocation* skill_invocation)
         CombatContext combat;
 
         // Initialize combat invocation for healing.
-        sub_4B2210(source_obj, target_obj, &combat);
+        combat_context_setup(source_obj, target_obj, &combat);
 
         if (is_success) {
             int heal;
