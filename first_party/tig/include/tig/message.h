@@ -40,7 +40,7 @@ typedef struct TigMouseMessageData {
     int dx;
     int dy;
     TigMessageMouseEvent event;
-    bool repeat;
+    bool repeat, centered;
 } TigMouseMessageData;
 
 typedef struct TigButtonMessageData {
