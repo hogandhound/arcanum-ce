@@ -83,7 +83,7 @@ void tig_message_exit(void)
 // 0x52B7B0
 void tig_message_ping(void)
 {
-    TigMessage message;
+    TigMessage message = { 0 };
     SDL_Event event;
     SDL_Renderer* renderer;
     int index;
@@ -276,7 +276,7 @@ int tig_message_dequeue(TigMessage* message)
 // 0x52BE60
 int tig_message_post_quit(int exit_code)
 {
-    TigMessage message;
+    TigMessage message = { 0 };
     tig_timer_now(&(message.timestamp));
     message.type = TIG_MESSAGE_QUIT;
     message.data.quit.exit_code = exit_code;

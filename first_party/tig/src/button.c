@@ -426,7 +426,7 @@ tig_button_handle_t tig_button_get_at_position(int x, int y)
 // 0x538220
 bool tig_button_process_mouse_msg(TigMouseMessageData* mouse)
 {
-    TigMessage msg;
+    TigMessage msg = { 0 };
     tig_button_handle_t button_handle;
     int button_index;
 
