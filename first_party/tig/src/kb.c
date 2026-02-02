@@ -42,7 +42,7 @@ bool tig_kb_get_modifier(SDL_Keymod keymod)
 
 void tig_kb_set_key(int key, bool down)
 {
-    TigMessage message;
+    TigMessage message = { 0 };
 
     message.type = TIG_MESSAGE_KEYBOARD;
     message.timestamp = tig_ping_timestamp;

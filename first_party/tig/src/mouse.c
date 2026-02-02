@@ -209,7 +209,7 @@ void tig_mouse_set_active(bool active)
 // 0x4FF390
 void tig_mouse_ping()
 {
-    TigMessage message;
+    TigMessage message = { 0 };
     int button;
 
     if (!tig_mouse_active) {
@@ -264,7 +264,7 @@ void tig_mouse_ping()
 // 0x4FF3B0
 void tig_mouse_set_position(int x, int y)
 {
-    TigMessage message;
+    TigMessage message = { 0 };
 
     // Reset "idle" event.
     tig_mouse_idle_emitted = false;
@@ -296,7 +296,7 @@ void tig_mouse_set_position(int x, int y)
 // 0x4FF410
 void tig_mouse_set_button(int button, bool pressed)
 {
-    TigMessage message;
+    TigMessage message = { 0 };
 
     if (pressed) {
         tig_mouse_software_button_timestamps[button] = tig_ping_timestamp;
@@ -847,7 +847,7 @@ void sub_500570()
 
 void tig_mouse_wheel(int dx, int dy)
 {
-    TigMessage message;
+    TigMessage message = { 0 };
 
     // Emit "wheel" event.
     message.type = TIG_MESSAGE_MOUSE;

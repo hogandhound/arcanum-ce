@@ -72,7 +72,7 @@ void tig_movie_exit()
 int tig_movie_play(const char* path, TigMovieFlags movie_flags, int sound_track)
 {
     unsigned int bink_open_flags = 0;
-    TigMessage message;
+    TigMessage message = { 0 };
     bool stop;
     int key = -1;
     TigVideoBufferCreateInfo vb_create_info;
