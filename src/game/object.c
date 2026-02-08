@@ -80,7 +80,7 @@ typedef struct ObjectPickupInfo {
 static void sub_43C5C0(GameDrawInfo* draw_info);
 static void sub_43CEA0(int64_t obj, unsigned int flags, const char* path);
 static int sub_43D690(int64_t obj);
-static int sub_43D630(int64_t obj);
+static int object_hp_from_level_stats(int64_t obj);
 static int sub_43FE00(int64_t a1, int64_t a2, int a3, int a4, unsigned int flags, int64_t* a6, int* a7, int* a8);
 static void object_list_vicinity_loc(int64_t loc, unsigned int flags, ObjectList* objects);
 static bool object_drop_success(void* userinfo);
@@ -1620,7 +1620,7 @@ int object_hp_max(int64_t obj)
     value = object_hp_adj_get(obj) + sub_43D690(obj);
     obj_type = obj_field_int32_get(obj, OBJ_F_TYPE);
     if (obj_type_is_critter(obj_type)) {
-        value = effect_adjust_max_hit_points(obj, sub_43D630(obj) + value);
+        value = effect_adjust_max_hit_points(obj, object_hp_from_level_stats(obj) + value);
     }
     return value;
 }
@@ -1632,7 +1632,7 @@ int object_hp_current(int64_t obj)
 }
 
 // 0x43D630
-int sub_43D630(int64_t obj)
+int object_hp_from_level_stats(int64_t obj)
 {
     int obj_type;
 

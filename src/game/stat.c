@@ -136,7 +136,7 @@ static int stat_default_values[STAT_COUNT] = {
     /*    STAT_EXPERIENCE_POINTS */ 0,
     /*            STAT_ALIGNMENT */ 0,
     /*          STAT_FATE_POINTS */ 0,
-    /*       STAT_UNSPENT_POINTS */ 5,
+    /*       STAT_UNSPENT_POINTS */ 20,
     /*        STAT_MAGICK_POINTS */ 0,
     /*          STAT_TECH_POINTS */ 0,
     /*         STAT_POISON_LEVEL */ 0,
@@ -152,25 +152,25 @@ static int stat_default_values[STAT_COUNT] = {
  */
 static int stat_cost_tbl[20] = {
     /*  0 */ 0,
-    /*  1 */ 1,
-    /*  2 */ 1,
-    /*  3 */ 1,
-    /*  4 */ 1,
-    /*  5 */ 1,
-    /*  6 */ 1,
-    /*  7 */ 1,
-    /*  8 */ 1,
-    /*  9 */ 1,
-    /* 10 */ 1,
-    /* 11 */ 1,
-    /* 12 */ 1,
-    /* 13 */ 1,
-    /* 14 */ 1,
-    /* 15 */ 1,
-    /* 16 */ 1,
-    /* 17 */ 1,
-    /* 18 */ 1,
-    /* 19 */ 1,
+    /*  1 */ 4,
+    /*  2 */ 4,
+    /*  3 */ 4,
+    /*  4 */ 4,
+    /*  5 */ 4,
+    /*  6 */ 4,
+    /*  7 */ 4,
+    /*  8 */ 4,
+    /*  9 */ 4,
+    /* 10 */ 4,
+    /* 11 */ 4,
+    /* 12 */ 4,
+    /* 13 */ 4,
+    /* 14 */ 4,
+    /* 15 */ 4,
+    /* 16 */ 4,
+    /* 17 */ 4,
+    /* 18 */ 4,
+    /* 19 */ 4,
 };
 
 /**
@@ -862,9 +862,9 @@ bool stat_is_extraordinary(int64_t obj, int stat)
 int stat_cost(int value)
 {
     if (value < 1) {
-        value = 1;
+        value = 4;
     } else if (value > 20) {
-        value = 20;
+        value = 80;
     }
 
     return stat_cost_tbl[value - 1];

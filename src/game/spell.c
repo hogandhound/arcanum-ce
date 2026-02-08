@@ -349,7 +349,7 @@ int spell_cost(int spell)
 {
     (void)spell;
 
-    return 1;
+    return 4;
 }
 
 /**
