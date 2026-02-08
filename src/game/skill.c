@@ -1042,7 +1042,7 @@ int tech_skill_base(int64_t obj, int ts)
         return 0;
     }
 
-    return 4 * tech_skill_points_get(obj, ts);
+    return tech_skill_points_get(obj, ts);
 }
 
 /**
