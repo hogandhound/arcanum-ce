@@ -1099,7 +1099,7 @@ void sub_4A2B00(Func5F0E08* func)
 int multiplayer_find_slot_from_obj(int64_t obj)
 {
     int player;
-    int64_t player_obj;
+    int64_t player_obj = 0;
 
     for (player = 0; player < NUM_PLAYERS; player++) {
         if (tig_net_client_is_active(player)
