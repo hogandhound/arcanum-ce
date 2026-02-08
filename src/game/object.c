@@ -70,7 +70,7 @@ typedef struct ObjectRenderColorsNode {
 static void sub_43C5C0(GameDrawInfo* draw_info);
 static void sub_43CEA0(int64_t obj, unsigned int flags, const char* path);
 static int sub_43D690(int64_t obj);
-static int sub_43D630(int64_t obj);
+static int object_hp_from_level_stats(int64_t obj);
 static int object_calc_traversal_cost_func(int64_t obj, int64_t loc, int rot, int orig_rot, unsigned int flags, int64_t* block_obj_ptr, int* block_obj_type_ptr, bool* is_window_ptr);
 static void object_list_vicinity_loc(int64_t loc, unsigned int flags, ObjectList* objects);
 static bool object_create_func(int64_t proto_obj, int64_t loc, int64_t* obj_ptr, ObjectID oid);
@@ -1664,7 +1664,7 @@ int object_hp_max(int64_t obj)
     value = object_hp_adj_get(obj) + sub_43D690(obj);
     obj_type = obj_field_int32_get(obj, OBJ_F_TYPE);
     if (obj_type_is_critter(obj_type)) {
-        value = effect_adjust_max_hit_points(obj, sub_43D630(obj) + value);
+        value = effect_adjust_max_hit_points(obj, object_hp_from_level_stats(obj) + value);
     }
     return value;
 }
@@ -1676,7 +1676,7 @@ int object_hp_current(int64_t obj)
 }
 
 // 0x43D630
-int sub_43D630(int64_t obj)
+int object_hp_from_level_stats(int64_t obj)
 {
     int obj_type;
 
