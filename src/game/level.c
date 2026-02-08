@@ -49,7 +49,7 @@ typedef enum AutoLevelError {
 typedef int(MiscGetter)(int64_t obj);
 typedef int(MiscSetter)(int64_t obj, int value);
 
-static int calculate_bonus_character_points(int old_level, int new_level);
+static int calculate_bonus_character_points(int64_t obj, int old_level, int new_level);
 static void update_follower_level(int64_t follower_obj, int old_pc_level, int new_pc_level);
 static bool auto_level_apply(int64_t obj, char* str);
 static bool auto_level_process_rule(int64_t obj, const char* str);
@@ -430,18 +430,26 @@ int level_progress_towards_next_level(int64_t obj)
  *
  * 0x4A6980
  */
-int calculate_bonus_character_points(int old_level, int new_level)
+int calculate_bonus_character_points(int64_t obj, int old_level, int new_level)
 {
     int points = 0;
     int level;
 
     for (level = old_level + 1; level <= new_level; level++) {
-        points++;
+        points+=4;
 
         // Extra point every 5 levels.
         if ((level % 5) == 0) {
-            points++;
+            points+=4;
         }
+
+        int intl = stat_base_get(obj, STAT_INTELLIGENCE);
+        if (intl >= 20)
+            points += 2;
+        else if (intl >= 15)
+            points += 1;
+        else if (intl >= 10 && (level % 2))
+            points += 1;
     }
 
     return points;

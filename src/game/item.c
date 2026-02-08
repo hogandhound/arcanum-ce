@@ -2352,7 +2352,6 @@ void sub_464470(int64_t obj, int* a2, int* a3)
     int obj_type;
     int inventory_num_fld;
     int inventory_list_fld;
-    int index;
     int cnt;
     int64_t item_obj;
     int v1 = 0;

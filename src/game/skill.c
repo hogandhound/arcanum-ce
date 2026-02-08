@@ -496,7 +496,7 @@ int basic_skill_base(int64_t obj, int bs)
         return 0;
     }
 
-    return 4 * basic_skill_points_get(obj, bs);
+    return basic_skill_points_get(obj, bs);
 }
 
 /**
@@ -615,7 +615,7 @@ int basic_skill_points_set(int64_t obj, int bs, int value)
 
     // Check if the new base skill level exceeds the stat-based maximum. If so,
     // return the current value without changing anything.
-    if (4 * value > max_skill_for_stat_level(key_stat_level)) {
+    if (value > max_skill_for_stat_level(key_stat_level)) {
         return current_value & 63;
     }
 
@@ -1147,7 +1147,7 @@ int tech_skill_points_set(int64_t obj, int ts, int value)
 
     // Check if the new base skill level exceeds the stat-based maximum. If so,
     // return the current value without changing anything.
-    if (4 * value > max_skill_for_stat_level(key_stat_level)) {
+    if (value > max_skill_for_stat_level(key_stat_level)) {
         return current_value & 63;
     }
 
