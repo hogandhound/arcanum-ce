@@ -510,7 +510,7 @@ void level_recalc(int64_t pc_obj)
 
             // Grant character points for level up.
             unspent_points = stat_base_get(pc_obj, STAT_UNSPENT_POINTS);
-            unspent_points += calculate_bonus_character_points(cur_level - 1, cur_level);
+            unspent_points += calculate_bonus_character_points(pc_obj, cur_level - 1, cur_level);
             stat_base_set(pc_obj, STAT_UNSPENT_POINTS, unspent_points);
 
             ui_message.field_8 = cur_level;
@@ -604,7 +604,7 @@ void update_follower_level(int64_t follower_obj, int old_pc_level, int new_pc_le
         stat_base_set(follower_obj, STAT_LEVEL, new_level);
 
         // Grant character points for level up.
-        bonus_points = calculate_bonus_character_points(curr_level, new_level);
+        bonus_points = calculate_bonus_character_points(follower_obj, curr_level, new_level);
         curr_points = stat_base_get(follower_obj, STAT_UNSPENT_POINTS);
         stat_base_set(follower_obj, STAT_UNSPENT_POINTS, bonus_points + curr_points);
 
@@ -760,7 +760,7 @@ void level_set(int64_t obj, int level)
 
         // Grant character points for level up.
         unspent_points = stat_base_get(obj, STAT_UNSPENT_POINTS);
-        bonus = calculate_bonus_character_points(1, level);
+        bonus = calculate_bonus_character_points(obj, 1, level);
         stat_base_set(obj, STAT_UNSPENT_POINTS, unspent_points + bonus);
     }
 
