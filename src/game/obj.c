@@ -1202,6 +1202,36 @@ bool obj_write(TigFile* stream, int64_t obj)
     return ret;
 }
 
+#if SHOW_NAME
+const char* description_get(int num);
+int critter_description_get(int64_t a, int64_t b);
+#endif
+void obj_skill_fix(int64_t obj)
+{
+    Object* object = obj_lock(obj);
+    int type = object->type;
+    obj_unlock(obj);
+    if (type == OBJ_TYPE_NPC) {
+        // obj_unlock(obj);
+#if SHOW_NAME
+        char* name = description_get(critter_description_get(obj, obj));
+#endif
+        for (int i = BASIC_SKILL_BOW; i < BASIC_SKILL_COUNT; ++i) {
+            int points = basic_skill_points_get(obj, i);
+            if (points >= 20)
+                printf("error\n");
+            basic_skill_points_set(obj, i, points * 4);
+        }
+        for (int i = TECH_SKILL_REPAIR; i < TECH_SKILL_COUNT; ++i) {
+            int points = tech_skill_points_get(obj, i);
+            if (points >= 20)
+                printf("error\n");
+            tech_skill_points_set(obj, i, points * 4);
+        }
+        //*object = obj_lock(obj);
+    }
+}
+
 // 0x406600
 bool obj_read(TigFile* stream, int64_t* obj_handle_ptr)
 {
@@ -1221,6 +1251,7 @@ bool obj_read(TigFile* stream, int64_t* obj_handle_ptr)
     } else {
         ret = obj_inst_read_file(stream, obj_handle_ptr, oid);
     }
+    obj_skill_fix(*obj_handle_ptr);
 
     return ret;
 }
