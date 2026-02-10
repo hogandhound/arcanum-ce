@@ -1218,14 +1218,18 @@ void obj_skill_fix(int64_t obj)
 #endif
         for (int i = BASIC_SKILL_BOW; i < BASIC_SKILL_COUNT; ++i) {
             int points = basic_skill_points_get(obj, i);
+#if SHOW_NAME
             if (points >= 20)
                 printf("error\n");
+#endif
             basic_skill_points_set(obj, i, points * 4);
         }
         for (int i = TECH_SKILL_REPAIR; i < TECH_SKILL_COUNT; ++i) {
             int points = tech_skill_points_get(obj, i);
+#if SHOW_NAME
             if (points >= 20)
                 printf("error\n");
+#endif
             tech_skill_points_set(obj, i, points * 4);
         }
         //*object = obj_lock(obj);
