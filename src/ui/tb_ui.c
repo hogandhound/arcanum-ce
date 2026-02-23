@@ -403,7 +403,7 @@ void charedit_error_msg(int type, int param)
 void sub_57CF70(int64_t a1, int64_t a2)
 {
     if (player_is_local_pc_obj(a1)) {
-        charedit_open(a2, CHAREDIT_MODE_PASSIVE);
+        charedit_open(a2, CHAREDIT_MODE_ACTIVE);
     }
 }
 

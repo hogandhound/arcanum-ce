@@ -501,7 +501,7 @@ bool sub_567E30(DialogUiEntry* entry, int a2)
     case 5:
         if (is_pc) {
             intgame_dialog_clear();
-            charedit_open(entry->state.npc_obj, CHAREDIT_MODE_PASSIVE);
+            charedit_open(entry->state.npc_obj, CHAREDIT_MODE_ACTIVE);
         }
         break;
     case 6:
@@ -639,7 +639,7 @@ bool sub_568280(DialogUiEntry* a1)
     case 5:
         if (is_pc) {
             intgame_dialog_clear();
-            charedit_open(a1->state.npc_obj, CHAREDIT_MODE_PASSIVE);
+            charedit_open(a1->state.npc_obj, CHAREDIT_MODE_ACTIVE);
         }
         break;
     case 6:
