@@ -1230,7 +1230,8 @@ void obj_skill_fix(int64_t obj)
             if (points >= 20)
                 printf("error\n");
 #endif
-            tech_skill_points_set(obj, i, points * 4);
+            if (points > 0)
+                tech_skill_points_set(obj, i, points * 4);
         }
         //*object = obj_lock(obj);
     }
