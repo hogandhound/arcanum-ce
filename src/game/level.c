@@ -443,7 +443,7 @@ int calculate_bonus_character_points(int64_t obj, int old_level, int new_level)
             points+=4;
         }
 
-        int intl = stat_base_get(obj, STAT_INTELLIGENCE);
+        int intl = stat_level_get(obj, STAT_INTELLIGENCE);
         if (intl >= 20)
             points += 2;
         else if (intl >= 15)
