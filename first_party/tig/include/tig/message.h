@@ -66,6 +66,7 @@ typedef struct TigKeyboardMessageData {
 } TigKeyboardMessageData;
 
 typedef struct TigCharacterMessageData {
+    SDL_Keymod mod;
     SDL_Keycode ch;
 } TigCharacterMessageData;
 

@@ -247,6 +247,13 @@ bool textedit_ui_process_message(TigMessage* msg)
         }
 
         // Write character at cursor.
+        if (msg->data.character.ch >= 'a' && msg->data.character.ch <= 'z')
+        {
+            if (((msg->data.character.mod & SDL_KMOD_CAPS) != 0) != ((msg->data.character.mod & SDL_KMOD_LSHIFT) != 0 || (msg->data.character.mod & SDL_KMOD_RSHIFT) != 0))
+            {
+                msg->data.character.ch += 'A' - 'a';
+            }
+        }
         textedit_ui_current_textedit->buffer[textedit_ui_pos] = msg->data.character.ch;
 
         // Update cursor and string length.

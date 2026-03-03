@@ -143,6 +143,7 @@ void tig_message_ping()
             if (event.type == SDL_EVENT_KEY_UP
                 && (event.key.key & (SDLK_SCANCODE_MASK | SDLK_EXTENDED_MASK)) == 0) {
                 message.type = TIG_MESSAGE_CHAR;
+                message.data.character.mod = event.key.mod;
                 message.data.character.ch = event.key.key;
                 tig_message_enqueue(&message);
             }

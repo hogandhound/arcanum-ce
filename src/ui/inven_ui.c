@@ -4041,7 +4041,7 @@ void sub_578B80(int a1)
         pkt->field_A0.type = OID_TYPE_NULL;
     }
 
-    pkt->field_60 = a1;
+    pkt->qty = a1;
     pkt->field_68 = sub_529520();
 
     if (tig_net_is_active()) {
@@ -4066,9 +4066,9 @@ void sub_578B80(int a1)
             strcpy(byte_681468, "nobody");
         }
 
-        if (pkt->field_60 > 1) {
+        if (pkt->qty > 1) {
             tig_debug_printf("UI: InvenItemTransfer - %d %ss(%s) going from %s to %s\n",
-                pkt->field_60,
+                pkt->qty,
                 byte_682BEC,
                 byte_6812FC,
                 byte_681468,
@@ -4104,7 +4104,7 @@ bool sub_578EA0(Packet81* pkt)
     unsigned int item_type;
     int worth;
 
-    qty = pkt->field_60;
+    qty = pkt->qty;
     flags = pkt->field_8;
     cost = pkt->field_5C;
     inventory_location = pkt->field_58;

@@ -750,7 +750,7 @@ typedef struct Packet81 {
     /* 0040 */ ObjectID field_40;
     /* 0058 */ int field_58;
     /* 005C */ int field_5C;
-    /* 0060 */ int field_60;
+    /* 0060 */ int qty;
     /* 0064 */ int field_64;
     /* 0068 */ int field_68;
     /* 006C */ int field_6C;
