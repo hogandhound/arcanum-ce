@@ -273,6 +273,10 @@ bool teleport_process(TeleportData* teleport_data)
         gfade_run(&(teleport_data->fade_in));
     }
 
+    if (!gamelib_save("slotAUTO", "Autosave")) {
+        //Do something?
+    }
+
     return true;
 }
 

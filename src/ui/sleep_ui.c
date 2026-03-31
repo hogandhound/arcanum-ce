@@ -719,6 +719,10 @@ void sleep_ui_wake_up(void)
     fade_data.duration = 2.0f;
     fade_data.steps = 48;
     gfade_run(&fade_data);
+
+    if (!gamelib_save("slotNAPS", "Sleepsave")) {
+        // Do something?
+    }
 }
 
 /**
