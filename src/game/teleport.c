@@ -274,7 +274,7 @@ bool teleport_process(TeleportData* teleport_data)
     }
 
     if (!gamelib_save("slotAUTO", "Autosave")) {
-        //Do something?
+        // Do something?
     }
 
     return true;

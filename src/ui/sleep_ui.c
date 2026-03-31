@@ -2,6 +2,7 @@
 
 #include "game/combat.h"
 #include "game/critter.h"
+#include "game/gamelib.h"
 #include "game/gfade.h"
 #include "game/hrp.h"
 #include "game/magictech.h"
