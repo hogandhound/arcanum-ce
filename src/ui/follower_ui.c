@@ -695,7 +695,7 @@ bool follower_ui_message_filter(TigMessage* msg)
                             }
                             break;
                         case FOLLOWER_UI_COMMAND_CHARACTER_SHEET:
-                            charedit_open(follower_ui_subordinate_obj, CHAREDIT_MODE_PASSIVE);
+                            charedit_open(follower_ui_subordinate_obj, CHAREDIT_MODE_ACTIVE);
                             break;
                         case FOLLOWER_UI_COMMAND_WAIT:
                             // Mind-controlled followers cannot be ordered to wait.

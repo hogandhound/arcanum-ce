@@ -322,7 +322,7 @@ bool dialog_ui_process_option(DialogUiEntry* entry, int option)
     case 5:
         if (is_pc) {
             intgame_dialog_clear();
-            charedit_open(entry->state.npc_obj, CHAREDIT_MODE_PASSIVE);
+            charedit_open(entry->state.npc_obj, CHAREDIT_MODE_ACTIVE);
         }
         break;
     case 6:
